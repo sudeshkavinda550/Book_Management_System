@@ -1,0 +1,62 @@
+<div class="book-list-container">
+  <h2>Book Library</h2>
+
+  <!-- Success Message -->
+  <div class="alert alert-success" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading Indicator -->
+  <div class="loading" *ngIf="isLoading">
+    <p>Loading books...</p>
+  </div>
+
+  <!-- Book Table -->
+  <div class="table-container" *ngIf="!isLoading">
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Publication Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.id }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.publicationDate | date: 'mediumDate' }}</td>
+          <td class="actions">
+            <button class="btn btn-edit" (click)="editBook(book)">Edit</button>
+            <button class="btn btn-delete" (click)="deleteBook(book.id)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="books.length === 0">
+          <td colspan="6" class="no-books">No books available. Add a new book to get started!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Book Form for Adding/Editing -->
+  <div class="form-section">
+    <h3>{{ isEditing ? 'Edit Book' : 'Add New Book' }}</h3>
+    <app-book-form 
+      [book]="selectedBook"
+      [isEditMode]="isEditing"
+      (bookAdded)="onBookAdded()"
+      (bookUpdated)="onBookUpdated()"
+      (cancelled)="cancelEdit()">
+    </app-book-form>
+  </div>
+</div>

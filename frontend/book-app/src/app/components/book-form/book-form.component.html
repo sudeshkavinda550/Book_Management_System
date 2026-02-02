@@ -1,0 +1,76 @@
+<div class="book-form-container">
+  <!-- Error Message -->
+  <div class="alert alert-error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Title <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="title" 
+        name="title" 
+        [(ngModel)]="formData.title" 
+        required 
+        placeholder="Enter book title"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Author -->
+    <div class="form-group">
+      <label for="author">Author <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="author" 
+        name="author" 
+        [(ngModel)]="formData.author" 
+        required 
+        placeholder="Enter author name"
+        class="form-control"
+      />
+    </div>
+
+    <!-- ISBN -->
+    <div class="form-group">
+      <label for="isbn">ISBN <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="isbn" 
+        name="isbn" 
+        [(ngModel)]="formData.isbn" 
+        required 
+        placeholder="Enter ISBN (e.g., 978-0-123456-78-9)"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Publication Date -->
+    <div class="form-group">
+      <label for="publicationDate">Publication Date <span class="required">*</span></label>
+      <input 
+        type="date" 
+        id="publicationDate" 
+        name="publicationDate" 
+        [(ngModel)]="formData.publicationDate" 
+        required 
+        class="form-control"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="!bookForm.valid">
+        {{ isEditMode ? 'Update Book' : 'Add Book' }}
+      </button>
+      <button type="button" class="btn btn-secondary" *ngIf="isEditMode" (click)="onCancel()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-secondary" *ngIf="!isEditMode" (click)="resetForm()">
+        Clear
+      </button>
+    </div>
+  </form>
+</div>
